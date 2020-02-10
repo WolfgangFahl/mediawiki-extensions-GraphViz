@@ -373,6 +373,8 @@ class UploadLocalFile extends LocalFile {
 		# Test to see if the row exists using INSERT IGNORE
 		# This avoids race conditions by locking the row until the commit, and also
 		# doesn't deadlock. SELECT FOR UPDATE causes a deadlock for every race condition.
+		
+		# 'img_description' => $comment  - deprecated field
 		$dbw->insert( 'image',
 			[
 				'img_name' => $this->getName(),
@@ -384,7 +386,7 @@ class UploadLocalFile extends LocalFile {
 				'img_major_mime' => $major_mime,
 				'img_minor_mime' => $minor_mime,
 				'img_timestamp' => $timestamp,
-				'img_description' => $comment,
+				'img_description_id' => 1,
 				'img_user' => $user->getId(),
 				'img_user_text' => $user->getName(),
 				'img_metadata' => $dbw->encodeBlob( $this->metadata ),
@@ -429,7 +431,7 @@ class UploadLocalFile extends LocalFile {
 					'oi_height' => 'img_height',
 					'oi_bits' => 'img_bits',
 					'oi_timestamp' => 'img_timestamp',
-					'oi_description' => 'img_description',
+					'oi_description_id' => 'img_description_id',
 					'oi_user' => 'img_user',
 					'oi_user_text' => 'img_user_text',
 					'oi_metadata' => 'img_metadata',
@@ -453,7 +455,7 @@ class UploadLocalFile extends LocalFile {
 					'img_major_mime' => $major_mime,
 					'img_minor_mime' => $minor_mime,
 					'img_timestamp' => $timestamp,
-					'img_description' => $comment,
+					'img_description_id' => 1,
 					'img_user' => $user->getId(),
 					'img_user_text' => $user->getName(),
 					'img_metadata' => $dbw->encodeBlob( $this->metadata ),
